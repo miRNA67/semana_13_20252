@@ -114,13 +114,13 @@ cd trim
 
 porechop -t 2 -i /data/2025_2/metagenomics/metataxonomic/final/omicas/its/barcode10_its.fastq.gz -o b10_its_porechop.fastq.gz
 
-gunzip -c b10_its_porechop.fastq.gz | NanoFilt -q 10 --length 400 --maxlength 2000 | gzip > b10_its.fastq.gz
+gunzip -c b10_its_porechop.fastq.gz | NanoFilt -q 10 --length 400 --maxlength 2000 | gzip > b10_its_nanofilt.fastq.gz
 
 # Para 16S
 
 porechop -t 2 -i /data/2025_2/metagenomics/metataxonomic/final/omicas/16s/barcode10_16s.fastq.gz -o b10_16s_porechop.fastq.gz
 
-gunzip -c b10_16s_porechop.fastq.gz | NanoFilt -q 10 --length 1000 --maxlength 2000 | gzip > b10_16s.fastq.gz
+gunzip -c b10_16s_porechop.fastq.gz | NanoFilt -q 10 --length 1000 --maxlength 2000 | gzip > b10_16s_nanofilt.fastq.gz
 ```
 
 ```bash
@@ -167,21 +167,21 @@ conda activate metataxonomic
 
 # Para ITS
 
-emu abundance --type map-ont --threads 10 --db /data/db/emu/unite/ --output-dir . ~/metataxonomic/nanopore/trim/b10_its.fastq.gz
+emu abundance --type map-ont --threads 10 --db /data/db/emu/unite/ --output-dir . ~/metataxonomic/nanopore/trim/b10_its_nanofilt.fastq.gz
 
-Copiar los archivos *_its.fastq_rel-abundance.tsv a la carpeta /data/2025_2/its_alumnos
+Copiar los archivos *_its_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/its_alumnos
 
-Copiar en su carpeta los archivos *_its.fastq_rel-abundance.tsv necesarios
+Copiar en su carpeta los archivos *_its_nanofilt.fastq_rel-abundance.tsv necesarios
 
 emu combine-outputs . tax_id
 
 # Para 16S
 
-emu abundance --type map-ont --threads 10 --db /data/db/emu/emu/ --output-dir . ~/metataxonomic/nanopore/trim/b10_16s.fastq.gz
+emu abundance --type map-ont --threads 10 --db /data/db/emu/emu/ --output-dir . ~/metataxonomic/nanopore/trim/b10_16s_nanofilt.fastq.gz
 
-Copiar los archivos *_16s.fastq_rel-abundance.tsv a la carpeta /data/2025_2/16s_alumnos
+Copiar los archivos *_16s_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/16s_alumnos
 
-Copiar en su carpeta los archivos *_16s.fastq_rel-abundance.tsv necesarios
+Copiar en su carpeta los archivos *_16s_nanofilt.fastq_rel-abundance.tsv necesarios
 
 emu combine-outputs . tax_id
 ```
@@ -203,15 +203,15 @@ sed 's/,$//' rizo_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/P
 
 # Para 16S
 
-awk 'BEGIN{ FS = OFS = "\t" } { print "", $0 }' emu-combined-tax_id.tsv > masato_its_emu.tsv
+awk 'BEGIN{ FS = OFS = "\t" } { print "", $0 }' emu-combined-tax_id.tsv > rizo_16s_emu.tsv
 
-awk '{if (NR == 1) {print $0} else {print NR-2, $0}}' masato_its_emu.tsv > tmp && mv tmp masato_its_emu.tsv
+awk '{if (NR == 1) {print $0} else {print NR-2, $0}}' rizo_16s_emu.tsv > tmp && mv tmp rizo_16s_emu.tsv
 
-tr '\t' ',' < masato_its_emu.tsv | sed 's/_nanofilt.fastq//g' > masato_its_emu.csv
+tr '\t' ',' < rizo_16s_emu.tsv | sed 's/_nanofilt.fastq//g' > rizo_16s_emu.csv
 
-awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19}' masato_its_emu.csv > tmp && mv tmp masato_its_emu.csv
+awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$12,$13,$14,$15,$16,$17}' rizo_16s_emu.csv > tmp && mv tmp rizo_16s_emu.csv
 
-sed 's/,$//' masato_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_its.fastq//g' > masato_its_emu_final.csv
+sed 's/,$//' rizo_16s_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_16s.fastq//g' > rizo_16s_emu_final.csv
 
 ## Crear en Windows la carpeta metataxonomic, copiar el archivo CSV final y descomprimir el archivo rizo_metataxonomica.zip que está en el aula virtual.
 
