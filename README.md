@@ -169,7 +169,7 @@ conda activate metataxonomic
 
 emu abundance --type map-ont --threads 10 --db /data/db/emu/unite/ --output-dir . ~/metataxonomic/nanopore/trim/b10_its_nanofilt.fastq.gz
 
-Copiar los archivos *_its_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/its_alumnos
+Copiar los archivos *_its_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/metagenomics/metataxonomic/its_alumnos
 
 Copiar en su carpeta los archivos *_its_nanofilt.fastq_rel-abundance.tsv necesarios
 
@@ -179,7 +179,7 @@ emu combine-outputs . tax_id
 
 emu abundance --type map-ont --threads 10 --db /data/db/emu/emu/ --output-dir . ~/metataxonomic/nanopore/trim/b10_16s_nanofilt.fastq.gz
 
-Copiar los archivos *_16s_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/16s_alumnos
+Copiar los archivos *_16s_nanofilt.fastq_rel-abundance.tsv a la carpeta /data/2025_2/metagenomics/metataxonomic/16s_alumnos
 
 Copiar en su carpeta los archivos *_16s_nanofilt.fastq_rel-abundance.tsv necesarios
 
