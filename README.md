@@ -165,15 +165,44 @@ cd taxonomy
 
 conda activate metataxonomic
 
-emu abundance --type map-ont --threads 10 --db /data/db/emu/unite/ --output-dir . ~/metataxonomic/trim/b01_its.fastq.gz
+# Para ITS
 
-# Repetir el mismo comando para los barcodes b02, b03, b04, b05, b06, b07, b08, b17 y b18
+emu abundance --type map-ont --threads 10 --db /data/db/emu/unite/ --output-dir . ~/metataxonomic/nanopore/trim/b10_its.fastq.gz
+
+Copiar los archivos *_its.fastq_rel-abundance.tsv a la carpeta /data/2025_2/its_alumnos
+
+Copiar en su carpeta los archivos *_its.fastq_rel-abundance.tsv necesarios
+
+emu combine-outputs . tax_id
+
+# Para 16S
+
+emu abundance --type map-ont --threads 10 --db /data/db/emu/emu/ --output-dir . ~/metataxonomic/nanopore/trim/b10_16s.fastq.gz
+
+Copiar los archivos *_16s.fastq_rel-abundance.tsv a la carpeta /data/2025_2/16s_alumnos
+
+Copiar en su carpeta los archivos *_16s.fastq_rel-abundance.tsv necesarios
 
 emu combine-outputs . tax_id
 ```
+
 ## 5. Obtención del archivo BIOM
 
 ```bash
+# Para ITS
+
+awk 'BEGIN{ FS = OFS = "\t" } { print "", $0 }' emu-combined-tax_id.tsv > rizo_its_emu.tsv
+
+awk '{if (NR == 1) {print $0} else {print NR-2, $0}}' rizo_its_emu.tsv > tmp && mv tmp rizo_its_emu.tsv
+
+tr '\t' ',' < rizo_its_emu.tsv | sed 's/_nanofilt.fastq//g' > rizo_its_emu.csv
+
+awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$12,$13,$14,$15,$16,$17}' rizo_its_emu.csv > tmp && mv tmp rizo_its_emu.csv
+
+sed 's/,$//' rizo_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_its.fastq//g' > rizo_its_emu_final.csv
+
+# Para 16S
+
 awk 'BEGIN{ FS = OFS = "\t" } { print "", $0 }' emu-combined-tax_id.tsv > masato_its_emu.tsv
 
 awk '{if (NR == 1) {print $0} else {print NR-2, $0}}' masato_its_emu.tsv > tmp && mv tmp masato_its_emu.tsv
@@ -184,7 +213,7 @@ awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$1
 
 sed 's/,$//' masato_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_its.fastq//g' > masato_its_emu_final.csv
 
-## Crear en Windows la carpeta metataxonomic, copiar el archivo CSV final y descomprimir el archivo biom.rar que está en el aula virtual.
+## Crear en Windows la carpeta metataxonomic, copiar el archivo CSV final y descomprimir el archivo rizo_metataxonomica.zip que está en el aula virtual.
 
 ## Abrir RStudio y seguir las indicaciones del docente.
 
@@ -194,30 +223,6 @@ sed 's/,$//' masato_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum
 ## 6. Análisis de diversidad  
 
 Abrir el archivo BIOM en el programa microbiomeanalyst(https://www.microbiomeanalyst.ca/MicrobiomeAnalyst/ModuleView.xhtml) y seguir las indicaciones del docente
-
-## 7. Analisis metataxonómico de las secuencias 16S
-
-```bash
-La localización de las secuencias 16S esta en /data/2025_1/sequencing/metataxonomica/16s_curso/
-
-Distribución de los barcodes: Grupo 1: b01, b02, b03, b04, b18 | Grupo 2: b05, b06, b07, b08, b17 | Grupo 3: b09, b10, b11, b12, b19 | Grupo 4: b13, b14, b15, b16, b20
-
-Realizar la visualización de calidad de las secuencias de sus respectivos barcodes
-
-Realizar la limpieza de los FASTQ utilizando los siguientes criterios: un Q minimo de 10, una longitud minima de secuencia de 1000 y una longitud máxima de 2000
-
-Calcular el número total de lecturas limpias
-
-Realizar el análisis metataxonómico de sus respectivos barcodes utilizando la base de datos localizada en /data/db/emu/emu/
-
-Copiar los archivos *_16s.fastq_rel-abundance.tsv a la carpeta /data/2025_1/16s_alumnos
-
-Copiar los archivos *_16s.fastq_rel-abundance.tsv que estan en la carpeta /data/2025_1/16s_alumnos segun el siguiente esquema: Grupo 1 copiara los archivos del Grupo 2, Grupo 2 copiara los archivos del Grupo 4, el Grupo 3 copiara los archivos del Grupo 1, Grupo 4 copiara los archivos del Grupo 3
-
-Generar el archivo emu-combined-tax_id.tsv y su respectivo archivo BIOM (reemplazar masato_its por masato_16s)
-
-Realizar el analisis de diversidad
-```
 
 # Bitácora de la práctica:
 
@@ -230,15 +235,6 @@ Realizar el analisis de diversidad
 •	Análisis de diversidad alfa (seleccionar 3 métricas) a nivel de género y familia 
 •	Análisis de beta diversidad (PCoA y NMDS) a nivel de género y familia
 ```
-
-## Discusión
-
-```bash
-•	Explicar que métrica de la diversidad alfa representa mejor la diversidad de las muestras
-•	Explicar cual metodo de ordinación de la diversidad beta explica mejor la similaridad/disimilaridad de las muestras
-```
-
-
 
 
 
