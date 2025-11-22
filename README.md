@@ -199,7 +199,7 @@ tr '\t' ',' < rizo_its_emu.tsv | sed 's/_nanofilt.fastq//g' > rizo_its_emu.csv
 
 awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$12,$13,$14,$15,$16,$17}' rizo_its_emu.csv > tmp && mv tmp rizo_its_emu.csv
 
-sed 's/,$//' rizo_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_its.fastq//g' > rizo_its_emu_final.csv
+sed 's/,$//' rizo_its_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_its//g' > rizo_its_emu_final.csv
 
 # Para 16S
 
@@ -211,7 +211,7 @@ tr '\t' ',' < rizo_16s_emu.tsv | sed 's/_nanofilt.fastq//g' > rizo_16s_emu.csv
 
 awk 'BEGIN{FS=OFS=","}{sub(/\r$/,"");print $1,$9,$8,$7,$6,$5,$4,$3,$2,$10,$11,$12,$13,$14,$15,$16,$17}' rizo_16s_emu.csv > tmp && mv tmp rizo_16s_emu.csv
 
-sed 's/,$//' rizo_16s_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_16s.fastq//g' > rizo_16s_emu_final.csv
+sed 's/,$//' rizo_16s_emu.csv | sed 's/superkingdom/Kingdom/g' | sed 's/phylum/Phylum/g' | sed 's/class/Class/g' | sed 's/order/Order/g' | sed 's/family/Family/g' | sed 's/genus/Genus/g' | sed 's/species/Species/g' | sed 's/_16s//g' > rizo_16s_emu_final.csv
 
 ## Crear en Windows la carpeta metataxonomic, copiar el archivo CSV final y descomprimir el archivo rizo_metataxonomica.zip que está en el aula virtual.
 
