@@ -226,15 +226,40 @@ Abrir el archivo BIOM en el programa microbiomeanalyst(https://www.microbiomeana
 
 # Bitácora de la práctica:
 
+## Titulo
+
+```bash
+•	Incluir el nombre de todos los integrantes
+```
+
+## Objetivos
+
+```bash
+•	Indicar cual es el objetivo del análisis metataxonómico considerando los grupos comparados.
+```
+
 ## Resultados
 
 ```bash
-•	Flujograma de todo el pipeline realizado 
-•	Valores de calidad y numero de lecturas en la data cruda y después de la limpieza 
+•	Flujograma de todo el pipeline realizado
+•	Numero de lecturas en la data cruda y después de la limpieza 
 •	Análisis de abundancia en todos los niveles taxonómicos
-•	Análisis de diversidad alfa (seleccionar 3 métricas) a nivel de género y familia 
+•	Análisis de diversidad alfa (seleccionar 3 métricas) a nivel de género y familia
 •	Análisis de beta diversidad (PCoA y NMDS) a nivel de género y familia
 ```
+
+## Discusión
+
+```bash
+•	En un parrafo describir lo observado en la diversidad beta.
+```
+
+## Recomendaciones
+
+```bash
+•	Incluir 2 recomendaciones relacionados al analisis metataxonómico.
+```
+
 
 
 
